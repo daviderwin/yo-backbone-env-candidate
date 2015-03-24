@@ -42,14 +42,15 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
                     '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
+                    'templates/**/*.hbs',
                     'test/spec/**/*.js'
                 ]
             },
-            jst: {
+            handlebars: {
                 files: [
-                    '<%= yeoman.app %>/scripts/templates/*.ejs'
+                    'templates/**/*.hbs'
                 ],
-                tasks: ['jst']
+                tasks: ['handlebars']
             },
             test: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
@@ -239,6 +240,20 @@ module.exports = function (grunt) {
                 }
             }
         },
+        handlebars: {
+            options: {
+                namespace: 'templates',
+                amd: 'templates',
+                processName: function (name) {
+                    return name.replace('templates\/', '');
+                }
+            },
+            all: {
+                files: {
+                    '<%= yeoman.app %>/scripts/templates.js' : [ 'templates/**/*.hbs' ]
+                }
+            }
+        },
         rev: {
             dist: {
                 files: {
@@ -271,7 +286,7 @@ module.exports = function (grunt) {
             return grunt.task.run([
                 'clean:server',
                 'createDefaultTemplate',
-                'jst',
+                'handlebars',
                 'connect:test',
                 'open:test',
                 'watch'
@@ -281,7 +296,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'createDefaultTemplate',
-            'jst',
+            'handlebars',
             'connect:livereload',
             'open:server',
             'watch'
@@ -293,7 +308,7 @@ module.exports = function (grunt) {
         var testTasks = [
                 'clean:server',
                 'createDefaultTemplate',
-                'jst',
+                'handlebars',
                 'connect:test',
                 'mocha',
             ];
@@ -310,7 +325,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'createDefaultTemplate',
-        'jst',
+        'handlebars',
         'useminPrepare',
         'requirejs',
         'copy',
@@ -325,7 +340,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'jshint',
-        'test',
+        'handlebars',
         'build'
     ]);
 };
