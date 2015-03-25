@@ -68,7 +68,6 @@ module.exports = function (grunt) {
                     middleware: function (connect) {
                         return [
                             lrSnippet,
-                            mountFolder(connect, '.tmp'),
                             mountFolder(connect, yeomanConfig.app)
                         ];
                     }
@@ -245,6 +244,12 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        jsdoc : {
+            all : {
+                src: '<%= yeoman.app %>/scripts/*.js',
+                dest: 'doc'
+            }
         }
     });
 
@@ -302,6 +307,7 @@ module.exports = function (grunt) {
         'requirejs',
         'copy',
         'htmlmin',
+        'jsdoc',
         'concat',
         'cssmin',
         'uglify',
@@ -315,4 +321,5 @@ module.exports = function (grunt) {
         'handlebars',
         'build'
     ]);
+
 };
