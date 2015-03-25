@@ -6,3 +6,12 @@ Development environments are a collection of tools each of which advances at the
 ## Why not submit pull requests to the generator?
 Pull requests for these fixes are already submitted!  
 
+## How
+
+clone the repo
+
+- sudo npm install -g bower (if you don't have it already)
+- npm install
+- bower install
+
+grunt serve
