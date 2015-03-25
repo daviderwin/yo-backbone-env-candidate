@@ -1,11 +1,11 @@
-define(['templates'], function(Handlebars) {
+define(['handlebars'], function(Handlebars) {
 
-this["templates"] = this["templates"] || {};
+this["handlebars"] = this["handlebars"] || {};
 
-this["templates"]["test.hbs"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "test hbs s\n\nlksdjflksj\n";
+this["handlebars"]["test.hbs"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "Test Template";
   },"useData":true});
 
-return this["templates"];
+return this["handlebars"];
 
 });

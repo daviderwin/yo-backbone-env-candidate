@@ -230,20 +230,10 @@ module.exports = function (grunt) {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
         },
-        jst: {
-            options: {
-                amd: true
-            },
-            compile: {
-                files: {
-                    '.tmp/scripts/templates.js': ['<%= yeoman.app %>/scripts/templates/*.ejs']
-                }
-            }
-        },
         handlebars: {
             options: {
-                namespace: 'templates',
-                amd: 'templates',
+                namespace: 'handlebars',
+                amd: true,
                 processName: function (name) {
                     return name.replace('templates\/', '');
                 }
@@ -268,10 +258,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('createDefaultTemplate', function () {
-        grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
-    });
-
     grunt.registerTask('server', function (target) {
         grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
         grunt.task.run(['serve' + (target ? ':' + target : '')]);
@@ -285,7 +271,6 @@ module.exports = function (grunt) {
         if (target === 'test') {
             return grunt.task.run([
                 'clean:server',
-                'createDefaultTemplate',
                 'handlebars',
                 'connect:test',
                 'open:test',
@@ -295,7 +280,6 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            'createDefaultTemplate',
             'handlebars',
             'connect:livereload',
             'open:server',
@@ -307,7 +291,6 @@ module.exports = function (grunt) {
         isConnected = Boolean(isConnected);
         var testTasks = [
                 'clean:server',
-                'createDefaultTemplate',
                 'handlebars',
                 'connect:test',
                 'mocha',
@@ -324,9 +307,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'createDefaultTemplate',
-        'handlebars',
         'useminPrepare',
+        'handlebars',
         'requirejs',
         'copy',
         'htmlmin',
